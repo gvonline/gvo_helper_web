@@ -19,9 +19,11 @@ if (isset($_POST['city_name']) && isset($_POST['city_status']) && isset($_POST['
     }
 
     if ((strlen($cityName) != 0) && (strlen($cityStatus) != 0)) {
-        $key = '도시:'.$cityName;
-        $value = serialize(array('TIME'=>time(), 'NAME'=>$cityName, 'STATUS'=>$cityStatus));
-        $redis->setex($key, $ttl, $value);
+        if (preg_match('/(남아|대폭|잘팔|어서)/', $cityStatus) != 0) {
+            $key = '도시:'.$cityName;
+            $value = serialize(array('TIME'=>time(), 'NAME'=>$cityName, 'STATUS'=>$cityStatus));
+            $redis->setex($key, $ttl, $value);
+        }
     }
 
     if ((strlen($cityName) != 0) && (strlen($itemName) != 0) && is_numeric($itemQuote) && is_numeric($itemStatus)) {
