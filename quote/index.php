@@ -1,34 +1,32 @@
 <?php
-if (isset($_POST['city_name']) && isset($_POST['city_status']) && isset($_POST['item_name']) && isset($_POST['item_quote']) && isset($_POST['item_status'])) {
+if (isset($_POST['city_name'])) {
     $redis = new Redis();
     $redis->connect('127.0.0.1','6379', 1, NULL, 100);
     $ttl = 60 * 60 * 3; // 3시간 후 자동 삭제
-    $cityName = trim($_POST['city_name']);
-    $cityStatus = trim($_POST['city_status']);
-    $itemName = trim($_POST['item_name']);
-    $itemQuote = trim($_POST['item_quote']);
-    $itemStatus = trim($_POST['item_status']);
+    $cityName = isset($_POST['city_name']) ? trim($_POST['city_name']) : '';
+    $cityStatus = isset($_POST['city_name']) ? trim($_POST['city_status']) : '';
+    $itemName = isset($_POST['city_name']) ? trim($_POST['item_name']) : '';
+    $saleQuote = isset($_POST['city_name']) ? trim($_POST['sale_quote']) : '';
+    $saleStatus = isset($_POST['city_name']) ? trim($_POST['sale_status']) : '';
 
     if ((strlen($cityName) != 0) && (strlen($cityStatus) == 0)) {
         $key = '도시:'.$cityName;
         $value = unserialize($redis->get($key));
         if (!is_array($value)) {
-            $value = serialize(array('TIME'=>0, 'NAME'=>$cityName, 'STATUS'=>''));
+            $value = serialize(array('TIME'=>0, 'NAME'=>$cityName, 'SALESTATUS'=>''));
             $redis->setex($key, $ttl, $value);
         }
     }
 
-    if ((strlen($cityName) != 0) && (strlen($cityStatus) != 0)) {
-        if (preg_match('/(남아|대폭|잘팔|어서)/', $cityStatus) != 0) {
-            $key = '도시:'.$cityName;
-            $value = serialize(array('TIME'=>time(), 'NAME'=>$cityName, 'STATUS'=>$cityStatus));
-            $redis->setex($key, $ttl, $value);
-        }
+    if ((strlen($cityName) != 0) && (preg_match('/(남아|대폭|잘팔|어서)/', $cityStatus) != 0)) {
+        $key = '도시:'.$cityName;
+        $value = serialize(array('TIME'=>time(), 'NAME'=>$cityName, 'SALESTATUS'=>$cityStatus));
+        $redis->setex($key, $ttl, $value);
     }
 
-    if ((strlen($cityName) != 0) && (strlen($itemName) != 0) && is_numeric($itemQuote) && is_numeric($itemStatus)) {
+    if ((strlen($cityName) != 0) && (strlen($itemName) != 0) && is_numeric($saleQuote) && is_numeric($saleStatus)) {
         $key = $cityName.':'.$itemName;
-        $value = serialize(array('TIME'=>time(), 'NAME'=>$itemName, 'QUOTE'=>$itemQuote, 'STATUS'=>$itemStatus));
+        $value = serialize(array('TIME'=>time(), 'NAME'=>$itemName, 'SALEQUOTE'=>$saleQuote, 'SALESTATUS'=>$saleStatus));
         $redis->setex($key, $ttl, $value);
     }
 
