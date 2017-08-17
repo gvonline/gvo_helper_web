@@ -30,7 +30,19 @@ function getQuoteStatusString($status=0) {
 
 $redis = new Redis();
 $redis->connect('127.0.0.1','6379', 1, NULL, 100);
-$citys = $redis->keys('도시:*');
+
+if (isset($_GET['type']) && ($_GET['type'] == 'city')) {
+    $key = '도시:'.trim($_GET['name']);
+    $citys = $redis->keys($key);
+}
+else if (isset($_GET['type']) && ($_GET['type'] == 'item')) {
+    $key = '*:'.trim($_GET['name']);
+    $citys = $redis->keys($key);
+}
+else {
+    $citys = $redis->keys('도시:*');
+}
+//$citys = $redis->keys('도시:*');
 asort($citys);
 ?>
 <!DOCTYPE html>
@@ -52,14 +64,17 @@ asort($citys);
     <form action="" method="get" class="form-inline">
         <div class="form-group">
             <label class="radio-inline"><input type="radio" name="type" value="city" checked>도시명검색</label>
-            <label class="radio-inline"><input type="radio" name="type" value="item">물품명검색</label>
-            <input type="text" name="name" class="form-control" placeholder="검색기능 준비중" disabled="disabled">
-            <button type="submit" class="btn btn-primary" disabled="disabled">검색</button>
+            <label class="radio-inline"><input type="radio" name="type" value="item">교역품명검색</label>
+            <input type="text" name="name" class="form-control" placeholder="검색어">
+            <button type="submit" class="btn btn-primary">검색</button>
+            <a class="btn btn-default" href="http://eirene.gvonline.ga" role="button">초기화</a>
+            <a class="btn btn-info" href="http://gvonline.ga" role="button">홈으로</a>
         </div>
     </form>
 </div>
 <div class="container">
     <table class="table table-bordered table-hover">
+<?php if (!isset($_GET['type']) || ($_GET['type'] == 'city')) : ?>
 <?php foreach ($citys as $cityKey) : $city = unserialize($redis->get($cityKey));?>
         <tr class="warning">
             <th><?php echo($city['NAME']); ?></th>
@@ -77,6 +92,18 @@ foreach ($items as $itemKey) : $item = unserialize($redis->get($itemKey));?>
         </tr>
 <?php endforeach; ?>
 <?php endforeach; ?>
+<?php else : ?>
+        <tr class="warning">
+            <th colspan="3"><?php echo($_GET['name']); ?></th>
+        </tr>
+<?php foreach ($citys as $cityKey) : $item = unserialize($redis->get($cityKey));?>
+        <tr>
+            <td><?php echo(str_replace(':'.$item['NAME'], '', $cityKey)); ?></td>
+            <td><?php echo($item['SALEQUOTE'].'% '.getQuoteStatusString($item['SALESTATUS'])); ?></td>
+            <td><?php echo(getPassedTimeString($item['TIME'])); ?></td>
+        </tr>
+<?php endforeach; ?>
+<?php endif; ?>
     </table>
 </div>
 </body>

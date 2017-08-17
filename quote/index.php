@@ -40,16 +40,28 @@ if (isset($_POST['city_name'])) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>GVOnline Helper :: 시세 도우미</title>
+<title>GVOnline Quote Helper :: 시세 도우미</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container" style="padding-bottom: 10px">
-    <h2>GVOnline Helper :: 시세 도우미</h2>
+    <h2>GVOnline Quote Helper :: 시세 도우미</h2>
 </div>
 <div class="container" style="padding-bottom: 10px">
-    <p>게임 실행시 아래 파일을 다운로드 받어 실행 하면 자동으로 등록 됩니다.</p>
+    <div class="center-block">
+        <p>이 프로그램은 게임화면을 분석하여 <strong class="text-success">도시명</strong>, <strong class="text-primary">교역소 주인의 대화</strong>, <strong class="text-danger">교역품명 및 시세</strong> 정보를 수집합니다.</p>
+        <p>수집은 상기 정보를 제외한 어떠한 내용도 수집하지 않습니다.</p>
+        <p>과거 DHOAgent 와 유사한 동작을 하는 프로그램입니다.<br />다른 점은 이 프로그램은 자동으로 수집만 하며 실제 자료는 <a href="http://gvonline.ga/">이곳 Site</a> 에서 확인 하게 됩니다.<br />모바일로 확인할 수도 있으며, 프로그램이 없어도 확인은 가능합니다.</p>
+        <p>일반 네비 프로그램 처럼 게임 실행 시 아래 파일을 다운로드 받아 실행하면 시세 데이터는 자동으로 수집됩니다.</p>
+        <p>Windows 10 기준으로 제작되어 있으며 아직은 많은 기간 테스트가 필요합니다.</p>
+    </div>
+    <div class="center-block">
+        <br />
+        <a class="btn btn-warning btn-lg btn-block" href="http://gvonline.ga/asset/GVOnlineQuoteHelper.zip" role="button">프로그램 다운로드</a>
+        <br />
+        <a class="btn btn-primary btn-lg btn-block" href="http://gvonline.ga" role="button">돌아가기</a>
+    </div>
 </div>
 </body>
 </html>

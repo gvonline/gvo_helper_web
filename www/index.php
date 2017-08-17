@@ -25,7 +25,9 @@
         <p>개발되는 모든 부분은 <a href="https://opensource.org/licenses/MIT">MIT License</a> 로 <a href="https://github.com/gvonline" target="_blank">GitHub</a> 에 공개 되므로 관심 있으신 분께선 같이 참여해 주시면 감사 하겠습니다.</p>
     </div>
     <div class="center-block">
+        <br />
         <a class="btn btn-info btn-lg btn-block" href="http://quote.gvonline.ga" role="button">시세 도우미</a>
+        <br />
         <a class="btn btn-primary btn-lg btn-block" href="http://eirene.gvonline.ga" role="button">에이레네 서버</a>
         <a class="btn btn-default btn-lg btn-block" href="http://polaris.gvonline.ga" role="button">폴라리스 서버</a>
         <a class="btn btn-default btn-lg btn-block" href="http://helen.gvonline.ga" role="button">헬레네 서버</a>
