@@ -10,8 +10,11 @@ function getPassedTimeString($time=0) {
     elseif ($passedTime < 60) {
         return sprintf('%s초 전', $passedTime);
     }
-    else {
+    elseif ($passedTime < 3600) {
         return sprintf('%s분 %s초 전', floor($passedTime / 60), $passedTime % 60);
+    }
+    else {
+        return sprintf('%s시간 전', floor($passedTime / 3600));
     }
 }
 
@@ -28,22 +31,68 @@ function getQuoteStatusString($status=0) {
     }
 }
 
+function compareCity($a, $b) {
+    if ($a['SALEQUOTE'] == $b['SALEQUOTE']) {
+        return strcmp($a['CITY'], $b['CITY']);
+    }
+    return ($a['SALEQUOTE'] > $b['SALEQUOTE']) ? -1 : 1;
+}
+
+function compareItem($a, $b) {
+    if ($a['SALEQUOTE'] == $b['SALEQUOTE']) {
+        return strcmp($a['NAME'], $b['NAME']);
+    }
+    return ($a['SALEQUOTE'] > $b['SALEQUOTE']) ? -1 : 1;
+}
+
 $redis = new Redis();
 $redis->connect('127.0.0.1','6379', 1, NULL, 100);
-
+$result = array();
 if (isset($_GET['type']) && ($_GET['type'] == 'city')) {
-    $key = '도시:'.trim($_GET['name']);
-    $citys = $redis->keys($key);
+    $searchKey =  sprintf('도시:%s', trim($_GET['name']));
+    $listKeys = $redis->keys($searchKey);
+    asort($listKeys);
+    $i = 0;
+    foreach ($listKeys as $cityKey) {
+        $city = unserialize($redis->get($cityKey));
+        $result[$i] = $city;
+        $result[$i]['ITEMS'] = array();
+        $items = $redis->keys($city['NAME'].':*');
+        foreach ($items as $itemKey) {
+            $result[$i]['ITEMS'][] = unserialize($redis->get($itemKey));
+        }
+        usort($result[$i]['ITEMS'], 'compareItem');
+        $i++;
+    }
 }
 else if (isset($_GET['type']) && ($_GET['type'] == 'item')) {
-    $key = '*:'.trim($_GET['name']);
-    $citys = $redis->keys($key);
+    $searchKey =  sprintf('*:%s', trim($_GET['name']));
+    $listKeys = $redis->keys($searchKey);
+    $i = 0;
+    foreach ($listKeys as $itemKey) {
+        $result[$i] = unserialize($redis->get($itemKey));
+        $result[$i]['CITY'] = str_replace(':'.$result[$i]['NAME'], '', $itemKey);
+        $i++;
+    }
+    usort($result, 'compareCity');
 }
 else {
-    $citys = $redis->keys('도시:*');
+    $listKeys = $redis->keys('도시:*');
+    asort($listKeys);
+    $i = 0;
+    foreach ($listKeys as $cityKey) {
+        $city = unserialize($redis->get($cityKey));
+        $result[$i] = $city;
+        $result[$i]['ITEMS'] = array();
+        $items = $redis->keys($city['NAME'].':*');
+        asort($items);
+        foreach ($items as $itemKey) {
+            $result[$i]['ITEMS'][] = unserialize($redis->get($itemKey));
+        }
+        $i++;
+    }
 }
-//$citys = $redis->keys('도시:*');
-asort($citys);
+$redis->close();
 ?>
 <!DOCTYPE html>
 <html>
@@ -61,32 +110,43 @@ asort($citys);
     <h2>GVOnline Helper :: 에이레네 서버</h2>
 </div>
 <div class="container" style="padding-bottom: 10px">
-    <form action="" method="get" class="form-inline">
+    <form action="/" method="get" class="form-inline">
         <div class="form-group">
+<?php if (!isset($_GET['type']) || ($_GET['type'] == 'city')) : ?>
             <label class="radio-inline"><input type="radio" name="type" value="city" checked>도시명검색</label>
             <label class="radio-inline"><input type="radio" name="type" value="item">교역품명검색</label>
+<?php else : ?>
+            <label class="radio-inline"><input type="radio" name="type" value="city">도시명검색</label>
+            <label class="radio-inline"><input type="radio" name="type" value="item" checked>교역품명검색</label>
+<?php endif; ?>
+<?php if (!isset($_GET['name'])) : ?>
             <input type="text" name="name" class="form-control" placeholder="검색어">
+<?php else : ?>
+            <input type="text" name="name" class="form-control" value="<?php echo($_GET['name']); ?>" placeholder="검색어">
+<?php endif; ?>
             <button type="submit" class="btn btn-primary">검색</button>
-            <a class="btn btn-default" href="http://eirene.gvonline.ga" role="button">초기화</a>
+            <a class="btn btn-default" href="http://eirene.gvonline.ga/" role="button">초기화</a>
             <a class="btn btn-info" href="http://gvonline.ga" role="button">홈으로</a>
         </div>
     </form>
 </div>
+<?php if (count($result) != 0) : ?>
 <div class="container">
     <table class="table table-bordered table-hover">
 <?php if (!isset($_GET['type']) || ($_GET['type'] == 'city')) : ?>
-<?php foreach ($citys as $cityKey) : $city = unserialize($redis->get($cityKey));?>
+<?php foreach ($result as $row) : ?>
         <tr class="warning">
-            <th><?php echo($city['NAME']); ?></th>
-            <th><?php echo($city['SALESTATUS']); ?></th>
-            <th><?php echo(getPassedTimeString($city['TIME'])); ?></th>
+<?php if (!isset($_GET['name'])) : ?>
+            <th><a href="/?type=city&name=<?php echo(urlencode($row['NAME'])); ?>"><?php echo($row['NAME']); ?></a></th>
+<?php else : ?>
+            <th><?php echo($row['NAME']); ?></th>
+<?php endif; ?>
+            <th><?php echo($row['SALESTATUS']); ?></th>
+            <th><?php echo(getPassedTimeString($row['TIME'])); ?></th>
         </tr>
-<?php
-$items = $redis->keys($city['NAME'].':*');
-asort($items);
-foreach ($items as $itemKey) : $item = unserialize($redis->get($itemKey));?>
+<?php foreach ($row['ITEMS'] as $item) : ?>
         <tr>
-            <td><?php echo($item['NAME']); ?></td>
+            <td><a href="/?type=item&name=<?php echo(urlencode($item['NAME'])); ?>"><?php echo($item['NAME']); ?></a></td>
             <td><?php echo($item['SALEQUOTE'].'% '.getQuoteStatusString($item['SALESTATUS'])); ?></td>
             <td><?php echo(getPassedTimeString($item['TIME'])); ?></td>
         </tr>
@@ -96,9 +156,9 @@ foreach ($items as $itemKey) : $item = unserialize($redis->get($itemKey));?>
         <tr class="warning">
             <th colspan="3"><?php echo($_GET['name']); ?></th>
         </tr>
-<?php foreach ($citys as $cityKey) : $item = unserialize($redis->get($cityKey));?>
+<?php foreach ($result as $item) : ?>
         <tr>
-            <td><?php echo(str_replace(':'.$item['NAME'], '', $cityKey)); ?></td>
+            <td><a href="/?type=city&name=<?php echo(urlencode($item['CITY'])); ?>"><?php echo($item['CITY']); ?></a></td>
             <td><?php echo($item['SALEQUOTE'].'% '.getQuoteStatusString($item['SALESTATUS'])); ?></td>
             <td><?php echo(getPassedTimeString($item['TIME'])); ?></td>
         </tr>
@@ -106,6 +166,6 @@ foreach ($items as $itemKey) : $item = unserialize($redis->get($itemKey));?>
 <?php endif; ?>
     </table>
 </div>
+<?php endif; ?>
 </body>
 </html>
-<?php $redis->close(); ?>
