@@ -75,7 +75,8 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
     <div class="center-block">
         <h4>1. 다운로드 화면</h4>
         <p><img src="/images/image001.jpg" style="border: 1px solid #000;" /></p>
-        <p>아래 <a href="https://github.com/gvonline/gvo_quote/releases/latest" target="_blank"><strong class="text-warning">[프로그램 다운로드]</strong></a> 버튼을 클릭후 GitHub 사이트에서 최신버전을 다운로드 해 주시기 바랍니다.</p>
+        <p>아래 <a href="https://github.com/gvonline/gvo_quote/releases/latest" target="_blank"><strong class="text-warning">[프로그램 다운로드]</strong></a> 버튼을 클릭후 GitHub 사이트에서 최신버전을 다운로드 해 주시기 바랍니다.<br />
+        <strong class="text-danger">(GitHub 사이트가 아닌 다른곳에서 받으셨다면 프로그램이 변조 되었을 가능성이 있으니 꼭 이곳에서 다운로드 하시기 바랍니다.)</strong></p>
         <p><br /></p>
     </div>
     <div class="center-block">
