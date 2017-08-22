@@ -19,7 +19,6 @@ function getPassedTimeString($time=0) {
 }
 
 function getQuoteStatusString($status=0) {
-    $passedTime = time() - $time;
     if ($status < 0) {
         return '<i class="fa fa-play text-primary fa-rotate-90" aria-hidden="true"></i>';
     }

@@ -4,10 +4,10 @@ if (isset($_POST['city_name'])) {
     $redis->connect('127.0.0.1','6379', 1, NULL, 100);
     $ttl = 60 * 60 * 3; // 3시간 후 자동 삭제
     $cityName = isset($_POST['city_name']) ? trim($_POST['city_name']) : '';
-    $cityStatus = isset($_POST['city_name']) ? trim($_POST['city_status']) : '';
-    $itemName = isset($_POST['city_name']) ? trim($_POST['item_name']) : '';
-    $saleQuote = isset($_POST['city_name']) ? trim($_POST['sale_quote']) : '';
-    $saleStatus = isset($_POST['city_name']) ? trim($_POST['sale_status']) : '';
+    $cityStatus = isset($_POST['city_status']) ? trim($_POST['city_status']) : '';
+    $itemName = isset($_POST['item_name']) ? trim($_POST['item_name']) : '';
+    $saleQuote = isset($_POST['sale_quote']) ? trim($_POST['sale_quote']) : '';
+    $saleStatus = isset($_POST['sale_status']) ? trim($_POST['sale_status']) : '';
 
     if ((strlen($cityName) != 0) && (strlen($cityStatus) == 0)) {
         $key = '도시:'.$cityName;
@@ -50,7 +50,7 @@ if (isset($_POST['city_name'])) {
 </div>
 <div class="container" style="padding-bottom: 10px">
     <div class="center-block">
-        <p>이 프로그램은 게임화면을 분석하여 <strong class="text-success">도시명</strong>, <strong class="text-primary">교역소 주인의 대화</strong>, <strong class="text-danger">교역품명 및 시세</strong> 정보를 수집합니다.</p>
+        <p>이 프로그램은 게임화면을 분석하여 <strong class="text-success">도시명</strong>, <strong class="text-primary">교역소 주인의 대화</strong>, <strong class="text-danger">교역품명 및 매각시세(인근도시시세 포함)</strong> 정보를 수집합니다.</p>
         <p>수집은 상기 정보를 제외한 어떠한 내용도 수집하지 않습니다.</p>
         <p>과거 DHOAgent 와 유사한 동작을 하는 프로그램입니다.<br />다른 점은 이 프로그램은 자동으로 수집만 하며 실제 자료는 <a href="http://gvonline.ga/">이곳 Site</a> 에서 확인 하게 됩니다.<br />모바일로 확인할 수도 있으며, 프로그램이 없어도 확인은 가능합니다.</p>
         <p>일반 네비 프로그램 처럼 게임 실행 시 아래 파일을 다운로드 받아 실행하면 시세 데이터는 자동으로 수집됩니다.</p>
@@ -58,7 +58,7 @@ if (isset($_POST['city_name'])) {
     </div>
     <div class="center-block">
         <br />
-        <a class="btn btn-warning btn-lg btn-block" href="http://gvonline.ga/asset/GVOnlineQuoteHelper.zip" role="button">프로그램 다운로드</a>
+        <a class="btn btn-warning btn-lg btn-block" href="https://github.com/gvonline/gvo_quote/releases/latest" role="button">프로그램 다운로드</a>
         <br />
         <a class="btn btn-primary btn-lg btn-block" href="http://gvonline.ga" role="button">돌아가기</a>
     </div>
