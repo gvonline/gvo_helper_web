@@ -30,18 +30,25 @@ function getQuoteStatusString($status=0) {
     }
 }
 
-function compareCity($a, $b) {
+function compareQuoteCity($a, $b) {
     if ($a['SALEQUOTE'] == $b['SALEQUOTE']) {
         return strcmp($a['CITY'], $b['CITY']);
     }
     return ($a['SALEQUOTE'] > $b['SALEQUOTE']) ? -1 : 1;
 }
 
-function compareItem($a, $b) {
+function compareQuoteItem($a, $b) {
     if ($a['SALEQUOTE'] == $b['SALEQUOTE']) {
         return strcmp($a['NAME'], $b['NAME']);
     }
     return ($a['SALEQUOTE'] > $b['SALEQUOTE']) ? -1 : 1;
+}
+
+function compareTimeItem($a, $b) {
+    if ($a['TIME'] == $b['TIME']) {
+        return strcmp($a['NAME'], $b['NAME']);
+    }
+    return ($a['TIME'] > $b['TIME']) ? -1 : 1;
 }
 
 function getListData($type, $name, $redis) {
@@ -59,7 +66,7 @@ function getListData($type, $name, $redis) {
             foreach ($items as $itemKey) {
                 $result[$i]['ITEMS'][] = unserialize($redis->get($itemKey));
             }
-            usort($result[$i]['ITEMS'], 'compareItem');
+            usort($result[$i]['ITEMS'], 'compareQuoteItem');
             $i++;
         }
     }
@@ -71,7 +78,7 @@ function getListData($type, $name, $redis) {
             $result[$i]['CITY'] = str_replace(':'.$result[$i]['NAME'], '', $itemKey);
             $i++;
         }
-        usort($result, 'compareCity');
+        usort($result, 'compareQuoteCity');
     }
     else {
         $listKeys = $redis->keys('도시:*');
@@ -80,11 +87,16 @@ function getListData($type, $name, $redis) {
             $city = unserialize($redis->get($cityKey));
             $result[$i] = $city;
             $result[$i]['ITEMS'] = array();
-            $items = $redis->keys($city['NAME'].':*');
+			$items = $redis->keys($city['NAME'].':*');
             asort($items);
             foreach ($items as $itemKey) {
                 $result[$i]['ITEMS'][] = unserialize($redis->get($itemKey));
             }
+			$result[$i]['COUNT'] = count($result[$i]['ITEMS']);
+			usort($result[$i]['ITEMS'], 'compareTimeItem');
+			if ((strlen($result[$i]['ITEMS']) == 0) && ($result[$i]['COUNT'] != 0)) {
+                $result[$i]['TIME'] = $result[$i]['ITEMS'][0]['TIME'];
+			}
             $i++;
         }
     }

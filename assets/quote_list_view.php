@@ -41,7 +41,7 @@
             <td><?php echo(getPassedTimeString($item['TIME'])); ?></td>
         </tr>
 <?php endforeach; ?>
-<?php else : ?>
+<?php elseif ($type == 'city') : ?>
 <?php foreach ($result as $row) : ?>
         <tr class="warning">
 <?php if (strlen($name) == 0) : ?>
@@ -59,6 +59,18 @@
             <td><?php echo(getPassedTimeString($item['TIME'])); ?></td>
         </tr>
 <?php endforeach; ?>
+<?php endforeach; ?>
+<?php else : ?>
+<?php foreach ($result as $index => $row) : ?>
+        <tr class="<?php echo(($index%2 == 0) ? 'active' : ''); ?>">
+<?php if (strlen($name) == 0) : ?>
+            <th><a href="<?php echo(sprintf('%s?type=city&name=%s', $baseURL, urlencode($row['NAME']))); ?>"><?php echo(sprintf('%s (%s)', $row['NAME'],  $row['COUNT'])); ?></a></th>
+<?php else : ?>
+            <th><?php echo($row['NAME']); ?></th>
+<?php endif; ?>
+            <th><?php echo($row['SALESTATUS']); ?></th>
+            <th><?php echo(getPassedTimeString($row['TIME'])); ?></th>
+        </tr>
 <?php endforeach; ?>
 <?php endif; ?>
     </table>
