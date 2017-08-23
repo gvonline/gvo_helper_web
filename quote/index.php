@@ -9,6 +9,12 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
     $ttl = 60 * 60 * 3; // 3시간 후 자동 삭제
     $redis = NULL;
 
+    unset($_POST['server']);
+    $temp = implode('', $_POST);
+    if (preg_match('/[:;<>&_\(\)a-zA-Z]/', $temp) != 0) {
+        exit();
+    }
+
     switch ($server) {
         case 'eirene':
             $redis = new Redis();
@@ -23,7 +29,7 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
     }
 
     if (is_null($redis)) {
-        return;
+        exit();
     }
 
     if ((strlen($cityName) != 0) && (strlen($cityStatus) == 0)) {
@@ -35,7 +41,7 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
         }
     }
 
-    if ((strlen($cityName) != 0) && (preg_match('/(남아|대폭|잘팔|어서)/', $cityStatus) != 0)) {
+    if ((strlen($cityName) != 0) && (preg_match('/(남아돌고|대폭락|대폭등|잘팔리고|잘 팔리고|어서 오세요)/', $cityStatus) != 0)) {
         $key = '도시:'.$cityName;
         $value = serialize(array('TIME'=>time(), 'NAME'=>$cityName, 'SALESTATUS'=>$cityStatus));
         $redis->setex($key, $ttl, $value);
@@ -48,7 +54,7 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
     }
 
     $redis->close();
-    return;
+    exit();
 }
 ?>
 <!DOCTYPE html>
