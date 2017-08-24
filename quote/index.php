@@ -1,4 +1,6 @@
 <?php
+require_once('../assets/common.php');
+
 if (isset($_POST['server']) && isset($_POST['city_name'])) {
     $server = isset($_POST['server']) ? trim($_POST['server']) : '';
     $cityName = isset($_POST['city_name']) ? trim($_POST['city_name']) : '';
@@ -8,6 +10,10 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
     $saleStatus = isset($_POST['sale_status']) ? trim($_POST['sale_status']) : '';
     $ttl = 60 * 60 * 3; // 3시간 후 자동 삭제
     $redis = NULL;
+
+    if (!isCityInTrader($cityName)) {
+        exit();
+    }
 
     unset($_POST['server']);
     $temp = implode('', $_POST);
