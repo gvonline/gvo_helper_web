@@ -27,8 +27,12 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
             $redis->connect('127.0.0.1','6379', 1, NULL, 100);
             break;
         case 'polaris':
+            $redis = new Redis();
+            $redis->connect('127.0.0.1','6380', 1, NULL, 100);
             break;
         case 'helen':
+            $redis = new Redis();
+            $redis->connect('127.0.0.1','6381', 1, NULL, 100);
             break;
         default:
             break;
@@ -92,12 +96,18 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
         <p><br /></p>
     </div>
     <div class="center-block">
-        <h4>2. 프로그램 동작 화면</h4>
+        <h4>2. 프로그램 동작 전 화면</h4>
         <img src="/images/image002.png" />
         <p>네비게이션 프로그램 과 동일 한 방식으로 동작함으로 프로그램 실행후 게임을 진행 하시면 되겠습니다.<br />
-        <strong class="text-danger">(에이레네 외 다른 서버는 이후 지원 할 예정 입니다.)</strong></p>
+        <strong class="text-danger" style="font-size: 200%;">서버 선택에 주의 해 주시기 바랍니다.</strong></p>
+        <p><br /></p>
+    </div>
+    <div class="center-block">
+        <h4>3. 프로그램 동작 화면</h4>
+        <img src="/images/image003.png" />
         <p><strong class="text-success">매각</strong> 화면 및 <strong class="text-success">인근도시시세</strong> 화면을 읽어 자동으로 갱신 하며, 화면을 읽어 분석하는데 대략 1초 정도의 시간이 걸립니다.</p>
         <p>수집된 결과는 프로그램내부가 아닌 각 서버 페이지에서 확인 하도록 되어 있어 모바일 및 PC 에서 확인 하실 수 있습니다.</p>
+        <p>Clear 버튼을 누르면 서버를 변경 하거나 새로운 정보로 갱신 할 수 있습니다.</p>
     </div>
     <div class="center-block">
         <br />
