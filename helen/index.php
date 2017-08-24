@@ -2,7 +2,7 @@
 require_once('../assets/common.php');
 
 $title = 'GVOnline Helper :: 헬레네 서버';
-$baseURL = 'http://helen.gvonline.ga/index2.php';
+$baseURL = 'http://helen.gvonline.ga/';
 $type = isset($_GET['type']) ? trim($_GET['type']) : '';
 $name = isset($_GET['name']) ? trim($_GET['name']) : '';
 

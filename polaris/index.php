@@ -2,7 +2,7 @@
 require_once('../assets/common.php');
 
 $title = 'GVOnline Helper :: 폴라리스 서버';
-$baseURL = 'http://polaris.gvonline.ga/index2.php';
+$baseURL = 'http://polaris.gvonline.ga/';
 $type = isset($_GET['type']) ? trim($_GET['type']) : '';
 $name = isset($_GET['name']) ? trim($_GET['name']) : '';
 
