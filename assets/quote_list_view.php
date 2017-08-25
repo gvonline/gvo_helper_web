@@ -24,6 +24,7 @@
             <button type="submit" class="btn btn-primary">검색</button>
             <a class="btn btn-default" href="<?php echo($baseURL); ?>" role="button">초기화</a>
             <a class="btn btn-info" href="http://gvonline.ga" role="button">홈으로</a>
+            <a class="btn btn-warning" href="<?php echo($orderURL); ?>" role="button"><?php echo($orderMessage); ?></a>
         </div>
     </form>
 </div>
@@ -36,7 +37,7 @@
         </tr>
 <?php foreach ($result as $item) : ?>
         <tr>
-            <td><a href="<?php echo(sprintf('%s?type=city&name=%s', $baseURL, urlencode($item['CITY']))); ?>"><?php echo($item['CITY']); ?></a></td>
+            <td><a href="<?php echo(sprintf('%s?type=city&name=%s&order=%s', $baseURL, urlencode($item['CITY']), urlencode($order))); ?>"><?php echo($item['CITY']); ?></a></td>
             <td><?php echo($item['SALEQUOTE'].'% '.getQuoteStatusString($item['SALESTATUS'])); ?></td>
             <td><?php echo(getPassedTimeString($item['TIME'])); ?></td>
         </tr>
@@ -45,7 +46,7 @@
 <?php foreach ($result as $row) : ?>
         <tr class="warning">
 <?php if (strlen($name) == 0) : ?>
-            <th><a href="<?php echo(sprintf('%s?type=city&name=%s', $baseURL, urlencode($row['NAME']))); ?>"><?php echo($row['NAME']); ?></a></th>
+            <th><a href="<?php echo(sprintf('%s?type=city&name=%s&order=%s', $baseURL, urlencode($row['NAME']), urlencode($order))); ?>"><?php echo($row['NAME']); ?></a></th>
 <?php else : ?>
             <th><?php echo($row['NAME']); ?></th>
 <?php endif; ?>
@@ -54,7 +55,7 @@
         </tr>
 <?php foreach ($row['ITEMS'] as $item) : ?>
         <tr>
-            <td><a href="<?php echo(sprintf('%s?type=item&name=%s', $baseURL, urlencode($item['NAME']))); ?>"><?php echo($item['NAME']); ?></a></td>
+            <td><a href="<?php echo(sprintf('%s?type=item&name=%s&order=%s', $baseURL, urlencode($item['NAME']), urlencode($order))); ?>"><?php echo($item['NAME']); ?></a></td>
             <td><?php echo($item['SALEQUOTE'].'% '.getQuoteStatusString($item['SALESTATUS'])); ?></td>
             <td><?php echo(getPassedTimeString($item['TIME'])); ?></td>
         </tr>
@@ -64,7 +65,7 @@
 <?php foreach ($result as $index => $row) : ?>
         <tr class="<?php echo(($index%2 == 0) ? 'active' : ''); ?>">
 <?php if (strlen($name) == 0) : ?>
-            <th><a href="<?php echo(sprintf('%s?type=city&name=%s', $baseURL, urlencode($row['NAME']))); ?>"><?php echo(sprintf('%s (%s)', $row['NAME'],  $row['COUNT'])); ?></a></th>
+            <th><a href="<?php echo(sprintf('%s?type=city&name=%s&order=%s', $baseURL, urlencode($row['NAME']), urlencode($order))); ?>"><?php echo(sprintf('%s (%s)', $row['NAME'],  $row['COUNT'])); ?></a></th>
 <?php else : ?>
             <th><?php echo($row['NAME']); ?></th>
 <?php endif; ?>
