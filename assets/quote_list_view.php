@@ -20,11 +20,12 @@
             <label class="radio-inline"><input type="radio" name="type" value="city" checked>도시명검색</label>
             <label class="radio-inline"><input type="radio" name="type" value="item">교역품명검색</label>
 <?php endif; ?>
-            <input type="text" name="name" class="form-control" value="<?php echo($name); ?>" placeholder="검색어">
+            <input type="text" name="name" class="form-control" value="<?php echo($name); ?>" placeholder="검색어, 검색어, ...">
             <button type="submit" class="btn btn-primary">검색</button>
-            <a class="btn btn-default" href="<?php echo($baseURL); ?>" role="button">초기화</a>
-            <a class="btn btn-info" href="http://gvonline.ga" role="button">홈으로</a>
             <a class="btn btn-warning" href="<?php echo($orderURL); ?>" role="button"><?php echo($orderMessage); ?></a>
+            <a class="btn btn-default" href="<?php echo($baseURL); ?>" role="button">초기화</a>
+            <span style="padding: 0px 10px">&nbsp;</span>
+            <a class="btn btn-info text-right" href="http://gvonline.ga" role="button">홈으로</a>
         </div>
     </form>
 </div>
@@ -32,24 +33,22 @@
 <div class="container">
     <table class="table table-bordered table-hover">
 <?php if ($type == 'item') : ?>
+<?php foreach ($result as $row) : ?>
         <tr class="warning">
-            <th colspan="3"><?php echo($name); ?></th>
+            <th colspan="3"><?php echo($row['NAME']); ?></th>
         </tr>
-<?php foreach ($result as $item) : ?>
+<?php foreach ($row['CITYS'] as $city) : ?>
         <tr>
-            <td><a href="<?php echo(sprintf('%s?type=city&name=%s&order=%s', $baseURL, urlencode($item['CITY']), urlencode($order))); ?>"><?php echo($item['CITY']); ?></a></td>
-            <td><?php echo($item['SALEQUOTE'].'% '.getQuoteStatusString($item['SALESTATUS'])); ?></td>
-            <td><?php echo(getPassedTimeString($item['TIME'])); ?></td>
+            <td><a href="<?php echo(sprintf('%s?type=city&name=%s&order=%s', $baseURL, urlencode($city['CITY']), urlencode($order))); ?>"><?php echo($city['CITY']); ?></a></td>
+            <td><?php echo($city['SALEQUOTE'].'% '.getQuoteStatusString($city['SALESTATUS'])); ?></td>
+            <td><?php echo(getPassedTimeString($city['TIME'])); ?></td>
         </tr>
+<?php endforeach; ?>
 <?php endforeach; ?>
 <?php elseif ($type == 'city') : ?>
 <?php foreach ($result as $row) : ?>
         <tr class="warning">
-<?php if (strlen($name) == 0) : ?>
-            <th><a href="<?php echo(sprintf('%s?type=city&name=%s&order=%s', $baseURL, urlencode($row['NAME']), urlencode($order))); ?>"><?php echo($row['NAME']); ?></a></th>
-<?php else : ?>
             <th><?php echo($row['NAME']); ?></th>
-<?php endif; ?>
             <th><?php echo($row['SALESTATUS']); ?></th>
             <th><?php echo(getPassedTimeString($row['TIME'])); ?></th>
         </tr>

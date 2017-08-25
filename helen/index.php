@@ -21,16 +21,28 @@ switch ($order) {
         break;
 }
 
+$names = array();
+if ($name != '') {
+    $temp = explode(',', $name);
+    foreach ($temp as $value) {
+        $names[] = trim($value);
+    }
+}
+
 $result = array();
 $redis = new Redis();
 $redis->connect('127.0.0.1','6381', 1, NULL, 100);
 switch ($type) {
     case 'city':
-        $result = getListDataForCity($name, $order, $redis);
+        foreach ($names as $value) {
+            $result = array_merge_recursive($result, getListDataForCity($value, $order, $redis));
+        }
         break;
 
     case 'item':
-        $result = getListDataForItem($name, $order, $redis);
+        foreach ($names as $value) {
+            $result = array_merge_recursive($result, getListDataForItem($value, $order, $redis));
+        }
         break;
 
     default:

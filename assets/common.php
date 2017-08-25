@@ -119,7 +119,7 @@ function getListDataForItem($name, $order, $redis) {
             usort($result, 'compareQuoteCityName');
             break;
     }
-    return $result;
+    return array(array('NAME' => $name, 'CITYS' => $result));
 }
 
 function getListDataForDashboard($order, $redis) {
