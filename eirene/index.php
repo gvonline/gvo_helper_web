@@ -6,7 +6,7 @@ $baseURL = 'http://eirene.gvonline.ga/';
 $orderURL = '';
 $orderMessage = '';
 $type = isset($_GET['type']) ? trim($_GET['type']) : '';
-$name = (($type != 0) && isset($_GET['name'])) ? trim($_GET['name']) : '';
+$name = (($type != '') && isset($_GET['name'])) ? trim($_GET['name']) : '';
 $order = isset($_GET['order']) ? trim($_GET['order']) : '';
 
 switch ($order) {
