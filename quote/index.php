@@ -51,7 +51,7 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
         }
     }
 
-    if ((strlen($cityName) != 0) && (preg_match('/(남아돌고|대폭락|대폭등|잘팔리고|잘 팔리고|어서 오세요)/', $cityStatus) != 0)) {
+    if ((strlen($cityName) != 0) && (preg_match('/(남아돌고|대폭락|대폭등|잘 팔려|잘팔리고|잘 팔리고|어서 오세요)/', $cityStatus) != 0)) {
         $key = '도시:'.$cityName;
         $value = serialize(array('TIME'=>time(), 'NAME'=>$cityName, 'SALESTATUS'=>$cityStatus));
         $redis->setex($key, $ttl, $value);

@@ -23,11 +23,14 @@
     </div>
     <div class="center-block">
         <br />
-        <a class="btn btn-info btn-lg btn-block" href="http://quote.gvonline.ga" role="button">시세 도우미</a>
+        <a class="btn btn-default btn-lg btn-block" href="http://quote.gvonline.ga" role="button">시세 도우미</a>
         <br />
         <a class="btn btn-primary btn-lg btn-block" href="http://eirene.gvonline.ga" role="button">에이레네 서버</a>
         <a class="btn btn-success btn-lg btn-block" href="http://polaris.gvonline.ga" role="button">폴라리스 서버</a>
         <a class="btn btn-warning btn-lg btn-block" href="http://helen.gvonline.ga" role="button">헬레네 서버</a>
+        <br />
+        <a class="btn btn-info btn-lg btn-block" href="https://goo.gl/ccnUYj" target="_blank" role="button">조선 랭작 데이터</a>
+        <a class="btn btn-info btn-lg btn-block" href="https://goo.gl/j17Lpw" target="_blank" role="button">교역품 거래 랭작 데이터</a>
     </div>
 </div>
 </body>
