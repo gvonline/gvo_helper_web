@@ -1,3 +1,4 @@
 *.zip
 *.7z
+*.sqlite3
 quote/latest

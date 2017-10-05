@@ -32,12 +32,8 @@ function getQuoteStatusString($status=0) {
     }
 }
 
-function getResistStatusString($cityName, $itemName) {
-    $goodsType = trim(getGoodsType($itemName));
-    if (strlen($goodsType) == 0) {
-        return '';
-    }
-    if (isCityHasGoodsType($cityName, $goodsType)) {
+function getResistStatusString($cityName, $resistCities) {
+    if (in_array($cityName, $resistCities) !== FALSE) {
         return '<span class="text-danger resist" data-toggle="tooltip" data-placement="right" title="내성항">★</span>';
     }
     else {
@@ -45,9 +41,34 @@ function getResistStatusString($cityName, $itemName) {
     }
 }
 
+function getSaleCitiesString($saleCities) {
+    $count = is_array($saleCities) ? count($saleCities) : 0;
+    if ($count == 0) {
+        return '';
+    }
+
+    $index = 0;
+    $result = '';
+    for (; $index < $count; $index++) {
+        $result .= $saleCities[$index];
+        if ($index+1 < $count) {
+            $result .= ',';
+        }
+
+        $result .= ($index%7 < 6) ? ' ' : "\n";
+    }
+
+    return '<span class="text-info sale" data-toggle="tooltip" data-placement="right" title="'.$result.'">【?】</span>';
+}
+
 function compareQuoteCityName($a, $b) {
     if ($a['SALEQUOTE'] == $b['SALEQUOTE']) {
-        return strcmp($a['CITY'], $b['CITY']);
+        if (array_key_exists('CITY', $a)) {
+            return strcmp($a['CITY'], $b['CITY']);
+        }
+        else {
+            return strcmp($a['DETAIL']['NAME'], $b['DETAIL']['NAME']);
+        }
     }
     return ($a['SALEQUOTE'] > $b['SALEQUOTE']) ? -1 : 1;
 }
@@ -122,7 +143,12 @@ function getListDataForItem($name, $order, $redis) {
     $listKeys = $redis->keys($searchKey);
     foreach ($listKeys as $itemKey) {
         $result[$i] = unserialize($redis->get($itemKey));
-        $result[$i]['CITY'] = str_replace(':'.$result[$i]['NAME'], '', $itemKey);
+        $searchKey = sprintf('도시:%s', str_replace(':'.$result[$i]['NAME'], '', $itemKey));
+        $city = unserialize($redis->get($searchKey));
+        if (!is_array($city)) {
+            $city = array('NAME'=>str_replace(':'.$result[$i]['NAME'], '', $itemKey));
+        }
+        $result[$i]['DETAIL'] = $city;
         $i++;
     }
     switch ($order) {
@@ -170,22 +196,4 @@ function getListDataForDashboard($order, $redis) {
             break;
     }
     return $result;
-}
-
-function isCityInTrader($cityName) {
-    global $_HAS_TRADER_CITY_NAMES;
-    return in_array($cityName, $_HAS_TRADER_CITY_NAMES);
-}
-
-function isCityHasGoodsType($cityName, $goodsType) {
-    global $_GOODS_TYPE_CITIS;
-    if (!array_key_exists($goodsType, $_GOODS_TYPE_CITIS)) {
-        return FALSE;
-    }
-    return in_array($cityName, $_GOODS_TYPE_CITIS[$goodsType]);
-}
-
-function getGoodsType($goodsName) {
-    global $_GOODS_TYPE;
-    return array_key_exists($goodsName, $_GOODS_TYPE) ? $_GOODS_TYPE[$goodsName] : FALSE;
 }
