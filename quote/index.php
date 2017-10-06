@@ -98,23 +98,32 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
     </div>
     <div class="center-block">
         <h4>2. 프로그램 동작 전 화면</h4>
-        <img src="/images/image002.png" />
+        <img src="/images/Image_02_5_001.PNG" />
         <p>네비게이션 프로그램 과 동일 한 방식으로 동작함으로 프로그램 실행후 게임을 진행 하시면 되겠습니다.<br />
+        서버를 선택 하기 전에는 동작 하지 않습니다.<br />
         <strong class="text-danger" style="font-size: 200%;">서버 선택에 주의 해 주시기 바랍니다.</strong></p>
         <p><br /></p>
     </div>
     <div class="center-block">
-        <h4>3. 프로그램 동작 화면</h4>
-        <img src="/images/image003.png" />
-        <p><strong class="text-success">매각</strong> 화면 및 <strong class="text-success">인근도시시세</strong> 화면을 읽어 자동으로 갱신 하며, 화면을 읽어 분석하는데 대략 1초 정도의 시간이 걸립니다.</p>
-        <p>수집된 결과는 프로그램내부가 아닌 각 서버 페이지에서 확인 하도록 되어 있어 모바일 및 PC 에서 확인 하실 수 있습니다.</p>
-        <p>Clear 버튼을 누르면 서버를 변경 하거나 새로운 정보로 갱신 할 수 있습니다.</p>
+        <h4>3. 수집기 동작 화면</h4>
+        <img src="/images/Image_02_5_002.PNG" />
+        <p><strong class="text-success">매각</strong> 화면 및 <strong class="text-success">인근도시시세</strong> 화면을 읽어 자동으로 갱신 하며, 화면을 읽어 분석하는데 대략 1초 정도의 시간이 걸립니다.<br />
+        수집된 결과는 프로그램내부 검색 또는 각 서버 페이지에서 확인 하도록 되어 있어 모바일 및 PC 에서 확인 하실 수 있습니다.<br />
+        Clear 버튼을 누르면 서버를 변경 하거나 새로운 정보로 갱신 할 수 있습니다.</p>
+        <p><br /></p>
+    </div>
+    <div class="center-block">
+        <h4>4. 검색 동작 화면</h4>
+        <img src="/images/Image_02_5_003.PNG" />
+        <p>필요한 도시 또는 교역품을 검색하여 결과를 볼 수 있습니다.</p>
+        <p><br /></p>
     </div>
     <div class="center-block">
         <br />
         <a class="btn btn-warning btn-lg btn-block" href="https://github.com/gvonline/gvo_quote/releases/latest" role="button" target="_blank">프로그램 다운로드</a>
         <br />
         <a class="btn btn-primary btn-lg btn-block" href="http://gvonline.ga" role="button">돌아가기</a>
+        <br />
     </div>
 </div>
 </body>
