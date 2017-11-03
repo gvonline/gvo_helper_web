@@ -1656,6 +1656,15 @@ INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, 
 INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, investing, center, century) VALUES (1377, '히혼', '광석', '철광석', NULL, NULL, NULL, NULL);
 INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, investing, center, century) VALUES (1378, '히혼', '기호품', '말린 딸기', NULL, NULL, NULL, NULL);
 INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, investing, center, century) VALUES (1379, '히혼', '총포류', '대포', NULL, NULL, NULL, '[13]');
+INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, investing, center, century) VALUES (1380, '보스턴', '식료품', '어육',  NULL, NULL, NULL, NULL);
+INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, investing, center, century) VALUES (1381, '보스턴', '주류', '럼주',  NULL, NULL, NULL, NULL);
+INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, investing, center, century) VALUES (1382, '보스턴', '조미료', '소금',  NULL, NULL, NULL, NULL);
+INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, investing, center, century) VALUES (1383, '보스턴', '기호품', '담배', 50000, 500000, NULL, NULL);
+INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, investing, center, century) VALUES (1384, '보스턴', '공예품', '피혁제품', 72000, 720000, NULL, NULL);
+INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, investing, center, century) VALUES (1385, '보스턴', '공예품', '고급의류', 85000, 8500000, NULL, NULL);
+INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, investing, center, century) VALUES (1386, '보스턴', '공업품', '강철', 85000, 8500000, NULL, NULL);
+INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, investing, center, century) VALUES (1387, '보스턴', '공업품', '석유', 24000, 240000, NULL, NULL);
+INSERT INTO goods_of_city (seq, city_name, goods_type, goods_name, development, investing, center, century) VALUES (1388, '보스턴', '기호품', '홍차', 85000, 8500000, NULL, NULL);
 
 INSERT INTO goods (seq, name, type, special) VALUES (2533, '종이', '공업품', NULL);
 INSERT INTO goods (seq, name, type, special) VALUES (2534, '목재', '공업품', NULL);

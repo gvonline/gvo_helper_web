@@ -29,8 +29,9 @@
         <a class="btn btn-success btn-lg btn-block" href="http://polaris.gvonline.ga" role="button">폴라리스 서버</a>
         <a class="btn btn-warning btn-lg btn-block" href="http://helen.gvonline.ga" role="button">헬레네 서버</a>
         <br />
-        <a class="btn btn-info btn-lg btn-block" href="https://goo.gl/ccnUYj" target="_blank" role="button">조선 랭작 데이터</a>
+        <a class="btn btn-info btn-lg btn-block" href="https://goo.gl/hKY1EJ" target="_blank" role="button">장식품 계산기</a>
         <a class="btn btn-info btn-lg btn-block" href="https://goo.gl/j17Lpw" target="_blank" role="button">교역품 거래 랭작 데이터</a>
+        <a class="btn btn-info btn-lg btn-block" href="https://goo.gl/ccnUYj" target="_blank" role="button">조선 랭작 데이터</a>
     </div>
 </div>
 </body>

@@ -98,7 +98,7 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
     </div>
     <div class="center-block">
         <h4>2. 프로그램 동작 전 화면</h4>
-        <img src="/images/Image_02_5_001.PNG" />
+        <img src="/images/image_20171103_01.png" />
         <p>네비게이션 프로그램 과 동일 한 방식으로 동작함으로 프로그램 실행후 게임을 진행 하시면 되겠습니다.<br />
         서버를 선택 하기 전에는 동작 하지 않습니다.<br />
         <strong class="text-danger" style="font-size: 200%;">서버 선택에 주의 해 주시기 바랍니다.</strong></p>
@@ -106,7 +106,7 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
     </div>
     <div class="center-block">
         <h4>3. 수집기 동작 화면</h4>
-        <img src="/images/Image_02_5_002.PNG" />
+        <img src="/images/image_20171103_02.png" />
         <p><strong class="text-success">매각</strong> 화면 및 <strong class="text-success">인근도시시세</strong> 화면을 읽어 자동으로 갱신 하며, 화면을 읽어 분석하는데 대략 1초 정도의 시간이 걸립니다.<br />
         수집된 결과는 프로그램내부 검색 또는 각 서버 페이지에서 확인 하도록 되어 있어 모바일 및 PC 에서 확인 하실 수 있습니다.<br />
         Clear 버튼을 누르면 서버를 변경 하거나 새로운 정보로 갱신 할 수 있습니다.</p>
@@ -114,8 +114,27 @@ if (isset($_POST['server']) && isset($_POST['city_name'])) {
     </div>
     <div class="center-block">
         <h4>4. 검색 동작 화면</h4>
-        <img src="/images/Image_02_5_003.PNG" />
-        <p>필요한 도시 또는 교역품을 검색하여 결과를 볼 수 있습니다.</p>
+        <img src="/images/image_20171103_03.png" />
+        <p>필요한 도시 또는 교역품을 검색하여 결과를 볼 수 있습니다.<br />
+        검색어는 , 로 구분 되며 여러개를 넣을 수 있습니다.<br />
+        검색된 결과에서 도시명 또는 교역품 명을 더블클릭하여 바로 해당 내용을 확인 할 수 있습니다.<br />
+        검색어를 입력 후 Enter 키를 누르면 바로 검색이 실행 됩니다.<br />
+        검색된 결과에서 상단 분류명을 누르면 정순/역순 으로 정렬 할 수 있습니다.</p>
+        <p><br /></p>
+    </div>
+    <div class="center-block">
+        <h4>5. 즐겨찾기 편집 화면</h4>
+        <img src="/images/image_20171103_04.png" />
+        <p><strong>SearchShortcuts.txt</strong> 파일을 편집 하면 나만의 즐겨찾기를 만들 수 있습니다.<br />
+        <strong class="text-success">즐겨찾기이름</strong> = <strong class="text-primary">도시명</strong> + <strong class="text-danger">교역품명</strong><br />
+        위 양식으로 다양하게 구성 할 수 있습니다.<br />
+        이미 등록되어있는 내용은 지워도 상관 없으니 마음껏 수정 하여 나만의 목록을 만들어 보시기 바랍니다.</p>
+        <p><br /></p>
+    </div>
+    <div class="center-block">
+        <h4>6. 즐겨찾기 동작 화면</h4>
+        <img src="/images/image_20171103_05.png" />
+        <p>즐겨찾기를 수정 후 프로그램을 다시 시작하면 해당 내용을 선택 하여 결과를 볼 수 있습니다.</p>
         <p><br /></p>
     </div>
     <div class="center-block">
